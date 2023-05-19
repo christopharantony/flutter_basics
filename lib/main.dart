@@ -15,33 +15,44 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
   @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  int counter = 0;
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 248, 60, 73),
       body: SafeArea(
-          child: ListView.separated(
-              itemBuilder: (BuildContext contxt, int index) {
-                return ListTile(
-                  leading: CircleAvatar(
-                    backgroundColor: Colors.greenAccent,
-                    radius: 30,
-                    backgroundImage: index % 2 == 0
-                        ? const AssetImage("images/1867702.jpg")
-                        : NetworkImage("https://picsum.photos/20$index")
-                            as ImageProvider,
-                  ),
-                  title: Text('Person ${index + 1}'),
-                  subtitle: const Text('This is the subtitle'),
-                  trailing: Text('${index + 1}:00 AM'),
-                );
-              },
-              separatorBuilder: (BuildContext contxt, int index) {
-                return const Divider();
-              },
-              itemCount: 20)),
+        child: Center(
+          child: ElevatedButton(
+            onPressed: () {
+              setState(() {
+                counter++;
+              });
+            },
+            onLongPress: () {
+              setState(() {
+                counter = 0;
+              });
+            },
+            child: Text("$counter"),
+          ),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          setState(() {
+            counter++;
+          });
+        },
+        child: const Icon(Icons.add),
+      ),
     );
   }
 }
